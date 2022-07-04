@@ -128,6 +128,17 @@
         daemon_reload: yes
         state: restarted
 
+    - name: Remover configuração containerd
+      file:
+        path: /etc/containerd/config.toml
+        state: absent
+
+    - name: Reiniciar serviço containerd
+      command: "{{ item }}"
+      changed_when: false 
+      with_items:
+      - systemctl restart containerd
+      
     - name: Initialize the Kubernetes cluster using kubeadm
       command: kubeadm init --apiserver-advertise-address="{{ node_ip }}" --apiserver-cert-extra-sans="{{ node_ip }}"  --node-name k8s-controlplane --pod-network-cidr=192.168.0.0/16
       args: 

@@ -2,7 +2,7 @@
 # vi: set ft=ruby  :
 
 NODES = 2
-IMAGE_NAME = "ubuntu/focal64"
+IMAGE_NAME = "generic/ubuntu2004"
 CONTROLPLANE_MEMORY=4096
 WORKER_MEMORY=2048
 NETWORK_PREFIX="192.168.165"
@@ -15,11 +15,10 @@ Vagrant.configure("2") do |config|
         controlplane.vm.box = IMAGE_NAME
         controlplane.vm.network "private_network", ip: "#{NETWORK_PREFIX}.10"
         controlplane.vm.hostname = "k8s-controlplane"
-        controlplane.vm.provider :virtualbox do |vb|
-            vb.name = "k8s-controlplane"
+        controlplane.vm.provider :libvirt do |vb|
+            vb.title = "k8s-controlplane"
             vb.memory = CONTROLPLANE_MEMORY
             vb.cpus = 2
-            vb.customize ["modifyvm", :id, "--groups", "/#{VM_GROUP_NAME}"]
         end        
         controlplane.vm.provision "ansible" do |ansible|
             ansible.playbook = "kubernetes-setup/k8s-controlplane-playbook.yml"
@@ -38,16 +37,15 @@ Vagrant.configure("2") do |config|
             node.vm.box = IMAGE_NAME
             node.vm.network "private_network", ip: "#{NETWORK_PREFIX}.#{i + 10}"
             node.vm.hostname = "k8s-worker-#{i}"
-            node.vm.provider :virtualbox do |vb|
-                vb.name = "k8s-worker-#{i}"
+            node.vm.provider :libvirt do |vb|
+                vb.title = "k8s-worker-#{i}"
                 vb.memory = WORKER_MEMORY
                 vb.cpus = 2
-                vb.customize ["modifyvm", :id, "--groups", "/#{VM_GROUP_NAME}"]
             end                  
             node.vm.provision "ansible" do |ansible|
                 ansible.playbook = "kubernetes-setup/k8s-worker-playbook.yml"
                 ansible.groups = {
-                    "workers" => ["k8s-worker-#{i}"]
+                    "workers" => ["k8s-worker-[1:#{NODES}]"]
                 }                
                 ansible.extra_vars = {
                     node_ip: "#{NETWORK_PREFIX}.#{i + 10}",

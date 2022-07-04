@@ -3,7 +3,7 @@ Criei esse repo com o objetivo de me preparar para o CKA, ele conta com um ambie
 
 Subir ambiente do vagrant
 ```shell
-$ vagrant up
+$ vagrant up --provider=libvirt
 ```
 ### Cursos 
 * [Kubernetes: Pods, Services e ConfigMaps](https://cursos.alura.com.br/course/kubernetes-pods-services-configmap)  
@@ -22,6 +22,7 @@ $ vagrant up
 
 ### Simulados práticos
 * [killer.sh](https://killer.sh/cka)  
+* [killercoda CKA](https://killercoda.com/killer-shell-cka)
 
 ### Repos auxiliares
 * [CKA guia de estudos](https://github.com/leandrocostam/cka-preparation-guide)
@@ -30,6 +31,6 @@ Somando o tempo necessário para leitura dos livros e conclusão dos cursos temo
 
 Planejamento de estudos  
 * 10 horas de estudo, segunda - sexta (**2 horas por dia**)  
-* 8 horass de estudo, sábado - domingo (**4 horas por dia**)  
+* 8 horas de estudo, sábado - domingo (**4 horas por dia**)  
 
 Considerando **34** dias úteis e **12** finais de semana são 116 horas de estudo, tempo que estimo ser suficiente para se preparar.

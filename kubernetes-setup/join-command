@@ -1,1 +1,1 @@
-kubeadm join 192.168.165.10:6443 --token egap32.m7mnd4n5cvz43frr --discovery-token-ca-cert-hash sha256:c7cb37d5f6a8feb88c9536fbb1ef8d5443714fc47c436e10d903ed3a2a120680 
+kubeadm join 192.168.165.10:6443 --token 50i7o8.31d7edvphvoobu1d --discovery-token-ca-cert-hash sha256:c9355634f7447d30c617695cdb5c97124bca62c129c7a8534d51e5be0fad20ff 

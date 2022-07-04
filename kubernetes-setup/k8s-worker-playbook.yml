@@ -108,7 +108,17 @@
           - kubelet 
           - kubeadm 
           - kubectl
+    - name: Remover configuração containerd
+      file:
+        path: /etc/containerd/config.toml
+        state: absent
 
+    - name: Reiniciar serviço containerd
+      command: "{{ item }}"
+      changed_when: false 
+      with_items:
+      - systemctl restart containerd
+      
     - name: Configure node ip
       lineinfile:
         create: yes
